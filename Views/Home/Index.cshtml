@@ -1,0 +1,59 @@
+﻿@{
+    ViewData["Title"] = "Home";
+    if (Model.Team != null) { ViewData["Title"] = Model.Team; } @*If a team is selected, display their name in the page title*@
+}
+
+@model IndexViewModel
+
+@if (Model.Team != null)@*If there is a team selected, display a header with the team's name*@
+{
+    <h1>@Model.Team</h1>
+    <br />
+}
+
+@*Cards with bootstrap styling to display the database contents*@
+<div class="row">
+    @foreach (var x in Model.Bowlers)@*Iterates through data in database and displays it in columns*@
+    {
+        <div class="col-6">
+            <div class="card text-white bg-dark mb-3" style="max-width: 25rem;">
+                <div class="card-header"><h4>@x.BowlerFirstName @x.BowlerMiddleInit @x.BowlerLastName</h4></div>
+                <div class="card-body">
+                    <p class="card-title" style="font-size:larger;"><u>Contact:</u></p>
+                    <p class="card-text">
+                        <div class="row">
+                            <div class="col-3">
+                                Address:
+                            </div>
+                            <div class="col-9">
+                                @x.BowlerAddress
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-3">
+                            </div>
+                            <div class="col-9">
+                                @x.BowlerCity, @x.BowlerState @x.BowlerZip
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-3">
+                                Phone:
+                            </div>
+                            <div class="col-9">
+                                @x.BowlerPhoneNumber
+                            </div>
+                        </div>
+                    </p>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@*tag helper used to dynamically show the correct number of pages and create the buttons for them*@
+<div class="text-center">
+    <div page-info="@Model.PageNumberingInfo" page-url-teamName="@Model.Team" page-classes-enabled="true"
+         page-class="btn" page-class-normal="btn-outline-dark m-1" page-class-selected="btn-secondary m-1">
+    </div>
+</div>

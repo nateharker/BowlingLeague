@@ -1,0 +1,15 @@
+﻿@{
+}
+@*Partial view to send to the shared layout with the dynamically updated menu of categories*@
+
+@model IEnumerable<Teams>
+@*Razor code checks to see if a category has been selected, if none has, highlight the home button*@
+<a class="btn btn-block @(ViewBag.SelectedTeam is null ? "btn-secondary" : "btn-outline-dark")"
+   asp-action="Index" asp-controller="Home" asp-route-teamId="">Home</a>
+
+@foreach (var x in Model)@*Loop displays all of the teams in the database*@
+{
+    <a class="btn btn-block @(x.TeamName == ViewBag.SelectedTeam ? "btn-secondary" : "btn-outline-dark")"
+       asp-action="Index" asp-controller="Home" asp-route-teamId="@x.TeamId" asp-route-teamName="@x.TeamName">@x.TeamName</a>
+    @*Razor code highlights the selected category but none of the others*@
+}
